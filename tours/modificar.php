@@ -7,10 +7,6 @@
   $sql="SELECT * FROM tour WHERE tour.id_tour=$id_tour";
   $query=$db->query($sql);
   $array=pg_fetch_array($query);
-
-  $sql_guias="SELECT guia.nombre_guia FROM poseen INNER JOIN guia ON guia.rut_guia=poseen.rut_guia WHERE poseen.id_tour=$id_tour";
-  $query=$db->query($sql_guias);
-  $guias=pg_fetch_array($query);
 ?>
 <!DOCTYPE html>
 <html lang="es">
@@ -69,60 +65,26 @@
     <!-- Header -->
     <header class="masthead d-flex">
       <div class="container">
-        <form>
-          <div class="form-row">
-            <div class="form-group col-md-6">
+        <form method="post" action="../tours/mod.php">
+          <input type="hidden" name="id_tour" <?php echo "value='{$id_tour}'"; ?>>
+            <div class="form-group">
               <label for="nombre_tour">Nombre de tour</label>
-              <input type="text" class="form-control" id="nombre_tour" <?php echo "value='{$array['nom_tour']}'"; ?>>
+              <input type="text" class="form-control" name="nombre_tour" id="nombre_tour" <?php echo "value='{$array['nom_tour']}'"; ?>>
             </div>
-            <div class="form-group col-md-6">
-              <label for="inputPassword4">Password</label>
-              <input type="password" class="form-control" id="inputPassword4" placeholder="Password">
+            <div class="form-group">
+              <label for="costo_tourind">Costo tour individual</label>
+              <input type="text" class="form-control" name="costo_tourind" id="costo_tourind" <?php echo "value='{$array['cost_tourind']}'"; ?>>
             </div>
+          <div class="form-group">
+            <label for="cost_tourg">Costo tour grupal</label>
+            <input type="text" class="form-control" name="cost_tourg" id="cost_tourg" <?php echo "value='{$array['cost_tourg']}'"; ?>>
           </div>
           <div class="form-group">
-            <label for="inputAddress">Address</label>
-            <input type="text" class="form-control" id="inputAddress" placeholder="1234 Main St">
+            <label for="min_per">Minimo de personas en el tour</label>
+            <input type="text" class="form-control" name="min_per" id="min_per" <?php echo "value='{$array['min_ptour']}'"; ?>>
           </div>
-          <?php
-            foreach ($guias as $key => $value) {
-              echo "  <div class=''form-group'>
-                        <label for='name''>Guias</label>
-                        <input type='text' class='form-control' id='name' value='{$value}'>
-                      </div>";
-            }
-          ?>
-
-          <div class="form-group">
-            <label for="inputAddress2">Address 2</label>
-            <input type="text" class="form-control" id="inputAddress2" placeholder="Apartment, studio, or floor">
-          </div>
-          <div class="form-row">
-            <div class="form-group col-md-6">
-              <label for="inputCity">City</label>
-              <input type="text" class="form-control" id="inputCity">
-            </div>
-            <div class="form-group col-md-4">
-              <label for="inputState">State</label>
-              <select id="inputState" class="form-control">
-                <option selected>Choose...</option>
-                <option>...</option>
-              </select>
-            </div>
-            <div class="form-group col-md-2">
-              <label for="inputZip">Zip</label>
-              <input type="text" class="form-control" id="inputZip">
-            </div>
-          </div>
-          <div class="form-group">
-            <div class="form-check">
-              <input class="form-check-input" type="checkbox" id="gridCheck">
-              <label class="form-check-label" for="gridCheck">
-                Check me out
-              </label>
-            </div>
-          </div>
-          <button type="submit" class="btn btn-primary">Sign in</button>
+          <a href="../tours"><button type="button" class="btn btn-primary" name="volver">Volver</button></a>
+          <button type="submit" class="btn btn-primary">Modificar</button>
         </form>
       </div>
     </header>
