@@ -55,7 +55,7 @@
           <a href="">Portfolio</a>
         </li>
         <li class="sidebar-nav-item">
-          <a href="">Contact</a>
+          <a href="../Vehiculos">Vehiculos</a>
         </li>
       </ul>
     </nav>
