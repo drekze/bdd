@@ -1,0 +1,9 @@
+<?php
+$config=[
+  "server"=>"127.0.0.1",
+  "port"=>"5432",
+  "database"=>"dbrebe",
+  "username"=>"postgres",
+  "password"=>"03041995",
+];
+?>
