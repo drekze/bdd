@@ -1,3 +1,13 @@
+<?php
+  include '../Class/dbClass.php';
+  require '../config.php';
+  $db=new dbClass;
+  $db->connect($config);
+  $no=1;
+  $query=$db->query( "SELECT *
+                      FROM turista left join padece using (rut_turista)
+                      left join enfermedades using(id_enfermedad);");
+?>
 <!DOCTYPE html>
 <html lang="en">
 
@@ -11,15 +21,15 @@
     <title>Stylish Portfolio - Start Bootstrap Template</title>
 
     <!-- Bootstrap Core CSS -->
-    <link href="vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+    <link href="../vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
 
     <!-- Custom Fonts -->
-    <link href="vendor/fontawesome-free/css/all.min.css" rel="stylesheet" type="text/css">
+    <link href="../vendor/fontawesome-free/css/all.min.css" rel="stylesheet" type="text/css">
     <link href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,700,300italic,400italic,700italic" rel="stylesheet" type="text/css">
-    <link href="vendor/simple-line-icons/css/simple-line-icons.css" rel="stylesheet">
+    <link href="../vendor/simple-line-icons/css/simple-line-icons.css" rel="stylesheet">
 
     <!-- Custom CSS -->
-    <link href="css/stylish-portfolio.min.css" rel="stylesheet">
+    <link href="../css/stylish-portfolio.min.css" rel="stylesheet">
 
   </head>
 
@@ -32,16 +42,13 @@
     <nav id="sidebar-wrapper">
       <ul class="sidebar-nav">
         <li class="sidebar-brand">
-          <a href="#">INICIO</a>
+          <a href="/dbrebe">INICIO</a>
         </li>
         <li class="sidebar-nav-item">
-          <a href="tours">Tours</a>
+          <a href="#">Tours</a>
         </li>
         <li class="sidebar-nav-item">
           <a href="">About</a>
-        </li>
-        <li class="sidebar-nav-item">
-          <a href="turista">Turistas</a>
         </li>
         <li class="sidebar-nav-item">
           <a href="">Services</a>
@@ -58,10 +65,31 @@
     <!-- Header -->
     <header class="masthead d-flex">
       <div class="container text-center my-auto">
-        <h1 class="mb-1">Proyecto base de datos</h1>
-        <h3 class="mb-5">
-          <em>Rebeca Millanao</em>
-        </h3>
+        <table class="table">
+          <thead>
+            <tr>
+              <th scope="col">#</th>
+              <th scope="col">Rut</th>
+              <th scope="col">Nombre turista</th>
+              <th scope="col">Descripcion Enfermedad</th>
+            </tr>
+          </thead>
+          <tbody>
+            <?php
+            while($array = pg_fetch_array($query)) {
+              echo"
+              <tr>
+                <th scope='row'>{$no}</th>
+                <td>{$array['rut_turista']}</td>
+                <td>{$array['nom_turist']}</td>
+                <td>{$array['desc_enfermedad']}</td>
+                <td><a href='../tours/modificar.php?id={$array['rut_turista']}'><button type='button' class='btn btn-primary'>Modificar</button></a><a href='../turista/eliminar.php?rut={$array['rut_turista']}'><button type='button' class='btn btn-danger'>Eliminar</button></a></td>
+              </tr>";
+              $no++;
+            }
+             ?>
+          </tbody>
+        </table>
       </div>
     </header>
 
@@ -95,14 +123,14 @@
     </a>
 
     <!-- Bootstrap core JavaScript -->
-    <script src="vendor/jquery/jquery.min.js"></script>
-    <script src="vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
+    <script src="../vendor/jquery/jquery.min.js"></script>
+    <script src="../vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
 
     <!-- Plugin JavaScript -->
-    <script src="vendor/jquery-easing/jquery.easing.min.js"></script>
+    <script src="../vendor/jquery-easing/jquery.easing.min.js"></script>
 
     <!-- Custom scripts for this template -->
-    <script src="js/stylish-portfolio.min.js"></script>
+    <script src="../js/stylish-portfolio.min.js"></script>
 
   </body>
 
