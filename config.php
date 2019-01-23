@@ -2,8 +2,8 @@
 $config=[
   "server"=>"127.0.0.1",
   "port"=>"5432",
-  "database"=>"dbrebe",
+  "database"=>"bd_seba",
   "username"=>"postgres",
-  "password"=>"03041995",
+  "password"=>"ganja345",
 ];
 ?>

@@ -83,13 +83,14 @@
                 <td>{$array['rut_turista']}</td>
                 <td>{$array['nom_turist']}</td>
                 <td>{$array['desc_enfermedad']}</td>
-                <td><a href='../tours/modificar.php?id={$array['rut_turista']}'><button type='button' class='btn btn-primary'>Modificar</button></a><a href='../turista/eliminar.php?rut={$array['rut_turista']}'><button type='button' class='btn btn-danger'>Eliminar</button></a></td>
+                <td><a href='../turista/modificar.php?rut_turista={$array['rut_turista']}'><button type='button' class='btn btn-primary'>Modificar</button></a><a href='../turista/eliminar.php?rut={$array['rut_turista']}'><button type='button' class='btn btn-danger'>Eliminar</button></a></td>
               </tr>";
               $no++;
             }
              ?>
           </tbody>
         </table>
+        <a href='../turista/insertar.php'><button type='button' class='btn btn-primary'>Insertar</button></a>
       </div>
     </header>
 

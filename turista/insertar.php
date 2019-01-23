@@ -4,12 +4,12 @@
   $db=new dbClass;
   $db->connect($config);
   $no=1;
-  $query=$db->query( "SELECT *
-                      FROM turista left join padece using (rut_turista)
-                      left join enfermedades using(id_enfermedad);");
+  $query2=$db->query("SELECT * FROM enfermedades");
+
+  $query3=$db->query("SELECT * FROM descuento");
 ?>
 <!DOCTYPE html>
-<html lang="en">
+<html lang="es">
 
   <head>
 
@@ -42,7 +42,7 @@
     <nav id="sidebar-wrapper">
       <ul class="sidebar-nav">
         <li class="sidebar-brand">
-          <a href="/dbrebe">INICIO</a>
+          <a href="../">INICIO</a>
         </li>
         <li class="sidebar-nav-item">
           <a href="#">Tours</a>
@@ -57,41 +57,60 @@
           <a href="">Portfolio</a>
         </li>
         <li class="sidebar-nav-item">
-          <a href="">Contact</a>
+          <a href="#">Vehiculos</a>
         </li>
       </ul>
     </nav>
 
     <!-- Header -->
-    <header class="masthead d-flex">
-      <div class="container text-center my-auto">
-        <table class="table">
-          <thead>
-            <tr>
-              <th scope="col">#</th>
-              <th scope="col">Rut</th>
-              <th scope="col">Nombre turista</th>
-              <th scope="col">Descripcion Enfermedad</th>
-            </tr>
-          </thead>
-          <tbody>
-            <?php
-            while($array = pg_fetch_array($query)) {
-              echo"
-              <tr>
-                <th scope='row'>{$no}</th>
-                <td>{$array['rut_turista']}</td>
-                <td>{$array['nom_turist']}</td>
-                <td>{$array['desc_enfermedad']}</td>
-                <td><a href='../tours/modificar.php?id={$array['rut_turista']}'><button type='button' class='btn btn-primary'>Modificar</button></a><a href='../turista/eliminar.php?rut={$array['rut_turista']}'><button type='button' class='btn btn-danger'>Eliminar</button></a></td>
-              </tr>";
-              $no++;
-            }
-             ?>
-          </tbody>
-        </table>
+    <div class="container">
+      <h2>Ingresar turista</h2>
+    </div>
+      <div class="container">
+        <form method="post" action="../turista/ingresar_turista.php">
+            <div class="form-group">
+              <label for="rut_turista">Rut turista</label>
+              <input type="text" class="form-control" name="rut_turista" id="rut_turista" value="">
+            </div>
+            <div class="form-group">
+              <label for="nombre_turista">Nombre turista</label>
+              <input type="text" class="form-control" name="nombre_turista" id="nombre_turista" value="">
+            </div>
+            <div class="form-group">
+              <label for="tel_turista">Contacto turista</label>
+              <input type="text" class="form-control" name="tel_turista" id="tel_turista" value="">
+            </div>
+            <div class="form-group">
+              <label for="fecha_nacimiento">Fecha nacimiento</label>
+              <input type="date" class="form-control" name="fecha_nacimiento" id="fecha_nacimiento" value="">
+            </div>
+            <div class="form-group">
+              <label for="id_descuento">Descuento</label>
+              <select class="form-control" name="id_descuento" id="id_descuento">
+                <option value=''>-</option>
+                <?php
+                  while ($array2=pg_fetch_array($query3))
+                    echo "<option value='{$array2['id_descuento']}'>{$array2['desc_descuento']}</option>";
+                ?>
+              </select>
+            </div>
+
+            <div class="form-group">
+              <label for="id_enfermedad">Enfermedades</label>
+              <select class="form-control" name="id_enfermedad" id="id_enfermedad">
+                <option value=''>-</option>
+                <?php
+                  while ($array3=pg_fetch_array($query2))
+                    echo "<option value='{$array3['id_enfermedad']}'>{$array3['desc_enfermedad']}</option>";
+                ?>
+              </select>
+            </div>
+
+
+          <a href="../turista"><button type="button" class="btn btn-primary" name="volver">Volver</button></a>
+          <button type="submit" class="btn btn-primary">Ingresar</button>
+        </form>
       </div>
-    </header>
 
     <!-- Footer -->
     <footer class="footer text-center">

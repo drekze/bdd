@@ -6,7 +6,10 @@
     $rut_recuperado= $_GET["rut"];
 
     $no=1;
+
+    $query=$db->query( "DELETE FROM padece WHERE rut_turista = '$rut_recuperado';");
     $query=$db->query( "DELETE FROM turista WHERE rut_turista = '$rut_recuperado';");
+        $query=$db->query( "DELETE FROM asiste WHERE rut_turista = '$rut_recuperado';");
 
     if(!$query){
     //Falta siguiente tabla

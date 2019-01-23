@@ -3,10 +3,16 @@
   require '../config.php';
   $db=new dbClass;
   $db->connect($config);
-  $id_tour=$_GET['id'];
-  $sql="SELECT * FROM tour WHERE tour.id_tour=$id_tour";
+  $rut_turista=$_GET['rut_turista'];
+  $sql="              SELECT *
+                      FROM turista left join padece using (rut_turista)
+                      left join enfermedades using(id_enfermedad)
+                      where rut_turista='$rut_turista';";
   $query=$db->query($sql);
   $array=pg_fetch_array($query);
+
+  $query2=$db->query("SELECT * FROM enfermedades");
+
 ?>
 <!DOCTYPE html>
 <html lang="es">
@@ -63,27 +69,37 @@
     </nav>
 
     <!-- Header -->
+    <!-- Header -->
     <header class="masthead d-flex">
       <div class="container">
-        <form method="post" action="../tours/mod.php">
-          <input type="hidden" name="id_tour" <?php echo "value='{$id_tour}'"; ?>>
+        <form method="post" action="../turista/mod.php">
             <div class="form-group">
-              <label for="nombre_tour">Rut turista</label>
-              <input type="text" class="form-control" name="nombre_tour" id="nombre_tour" <?php echo "value='{$array['nom_tour']}'"; ?>>
+              <label for="rut_turista">Rut turista</label>
+              <input type="text" class="form-control" name="rut_turista" id="rut_turista" <?php echo "value='{$array['rut_turista']}'"; ?>>
             </div>
             <div class="form-group">
-              <label for="costo_tourind">Nombre turista</label>
-              <input type="text" class="form-control" name="costo_tourind" id="costo_tourind" <?php echo "value='{$array['cost_tourind']}'"; ?>>
+              <label for="nom_turist">Nombre turista</label>
+              <input type="text" class="form-control" name="nom_turist" id="nom_turist" <?php echo "value='{$array['nom_turist']}'"; ?>>
             </div>
           <div class="form-group">
-            <label for="cost_tourg">Telefono turista</label>
-            <input type="text" class="form-control" name="cost_tourg" id="cost_tourg" <?php echo "value='{$array['cost_tourg']}'"; ?>>
+            <label for="tel_tur">Telefono turista</label>
+            <input type="text" class="form-control" name="tel_tur" id="tel_tur" <?php echo "value='{$array['tel_tur']}'"; ?>>
           </div>
           <div class="form-group">
-            <label for="min_per">Descripcion enfermedad</label>
-            <input type="text" class="form-control" name="min_per" id="min_per" <?php echo "value='{$array['min_ptour']}'"; ?>>
+            <label for="desc_enfermedad">Descripcion enfermedad</label>
+            <input type="text" class="form-control" disabled name="desc_enfermedad" id="desc_enfermedad" <?php echo "value='{$array['desc_enfermedad']}'"; ?>>
           </div>
-          <a href="../tours"><button type="button" class="btn btn-primary" name="volver">Volver</button></a>
+          <div class="form-group">
+            <label for="tour">Descripcion enfermedad a cambiar</label>
+            <select class="form-control" name="id_enfermedad" id="id_enfermedad">
+              <option value=''>-</option>
+              <?php
+                while ($array=pg_fetch_array($query2))
+                  echo "<option value='{$array['id_enfermedad']}'>{$array['desc_enfermedad']}</option>";
+              ?>
+            </select>
+          </div>
+          <a href="../turista"><button type="button" class="btn btn-primary" name="volver">Volver</button></a>
           <button type="submit" class="btn btn-primary">Modificar</button>
         </form>
       </div>
